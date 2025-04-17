@@ -31,24 +31,25 @@ class DB_Tables:
         if not self.connection or not self.connection.is_connected():
             print("NO ACTIVE CONNECTION")
             return None
-        
+
         try:
             cursor= self.connection.cursor()
             cursor.execute(query)
             results= cursor.fetchall()
             return results
-        
+
         except Error as e:
             print(f"ERROR OCCURED DURING QUERY : {e}")
 
 
 
+if __name__ == "__main__":
 
-j=DB_Tables("localhost", "root", "CarpeDiem0903", "book_shop")
+    j=DB_Tables("localhost", "root", "CarpeDiem0903", "book_shop")
 
-j.connect()
-output=j.disp_tables("DESC books") 
-if output:
-    for n,i in enumerate(output,start=1):
-        print(f"{n} {i}")
-j.disconnect()
+    j.connect()
+    output=j.disp_tables("DESC books")
+    if output:
+        for n,i in enumerate(output,start=1):
+            print(f"{n} {i}")
+    j.disconnect()
