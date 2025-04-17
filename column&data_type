@@ -21,7 +21,7 @@ class DB_Tables:
                 print("DATABASE IS CONNECTED")
 
         except Error as e:
-            print(f"Error Occured while attempting to connect : {e}")
+            print(f"Error occured while attempting to connect : {e}")
 
     def disconnect(self):
         if self.connection or self.connection.is_connected():
@@ -39,7 +39,7 @@ class DB_Tables:
             return results
         
         except Error as e:
-            print(f"ERROR OCCUED DURING QUERY : {e}")
+            print(f"ERROR OCCURED DURING QUERY : {e}")
 
 
 
