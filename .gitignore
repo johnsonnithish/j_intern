@@ -1,0 +1,15 @@
+# Ignore PyCharm project settings
+.idea/
+*.iml
+
+# Bytecode
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+venv/
+.env/
+
+# Mac/Windows junk files
+.DS_Store
+Thumbs.db
