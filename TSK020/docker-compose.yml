@@ -1,1 +1,11 @@
+version: '3.8'
+
+services:
+  j_intern_py:
+    image: python:3.13.3
+    container_name: j_intern_py
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: python hello.py
 
