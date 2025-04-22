@@ -75,7 +75,7 @@ def get_employees():
             connection.close()
             print("MySQL connection is closed")
 @app.get("/employees/filter", response_model=List[Dict])
-def get_employees_by_first_name(first_name: str = Query(..., description="First name to filter")):
+def get_employees_by_first_name(first_name: str = Query(...,)):
     try:
         connection = create_connection()
         cursor = connection.cursor(dictionary=True)
