@@ -1,18 +1,3 @@
 {
-    "sqltools.connections": [
-        {
-            "mysqlOptions": {
-                "authProtocol": "default",
-                "enableSsl": "Disabled"
-            },
-            "previewLimit": 50,
-            "server": "35.154.151.12",
-            "port": 5501,
-            "driver": "MySQL",
-            "name": "j_intern_portal_db_18_10_24",
-            "database": "portal_db_18_10_24",
-            "username": "johnsonm",
-            "askForPassword": true
-        }
-    ]
+    "sqltools.connections": []
 }
