@@ -29,7 +29,7 @@ query = """ SELECT
 app = FastAPI()
 @app.get("/")
 def read_root():
-    return {"message": "Welcome to the TSK025 Employee API!"}
+    return "TSK026 REST API"
 
 def get_info():
     return EmployeeService(*conn_details.values(),query)
