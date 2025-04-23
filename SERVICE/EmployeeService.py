@@ -4,8 +4,8 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from SERVICE.DBService import DBService ,Error
 from fastapi import Query
 class EmployeeService(DBService):
-    def __init__(self,host,database,user,port,password,query):
-        super().__init__(host,database,user,port,password)
+    def __init__(self,query):
+        super().__init__()
         self.query=query
     def get_employees(self):
         try:
@@ -24,12 +24,10 @@ class EmployeeService(DBService):
                 print("MySQL connection is closed")
 
 
-class EmployeeServiceFilter(EmployeeService):
-    def __init__(self,host,database,user,port,password,query):
-        super().__init__(host,database,user,port,password,query)
+class EmployeeServiceFilter(DBService):
+    def __init__(self,query):
+        super().__init__()
         self.query=query
-    def get_employees2(self):
-        return self.get_employees()
     def get_employees_by_first_name(self,first_name: str):
         try:
             connection = self.create_connection()

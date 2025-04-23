@@ -4,13 +4,7 @@ import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from SERVICE.EmployeeService import EmployeeService
-conn_details = {
-    'host': '35.154.151.12',
-    'database': 'portal_db_18_10_24',
-    'user': 'johnsonm',
-    'port': 5501,
-    'password': 'nQ*{i~1XeY1N0('
-}
+
 query = """ SELECT
             e.first_name AS "First Name",
             e.last_name AS "Last Name",
@@ -32,7 +26,7 @@ def read_root():
     return "TSK026 REST API"
 
 def get_info():
-    return EmployeeService(*conn_details.values(),query)
+    return EmployeeService(query)
 @app.get("/employees")
 def emp_info(info: EmployeeService=Depends(get_info)):
     return info.get_employees()

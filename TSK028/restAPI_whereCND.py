@@ -5,13 +5,6 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from SERVICE.EmployeeService import  EmployeeServiceFilter
 
-conn_details= {
-    'host':'35.154.151.12',
-    'database':'portal_db_18_10_24',
-    'user':'johnsonm',
-    'port':5501,
-    'password':'nQ*{i~1XeY1N0('
-}
 query = """
         SELECT
         e.first_name AS "First Name",
@@ -35,7 +28,7 @@ def read_root():
     return {"TSK028"} 
 
 def get_info_filter():
-    return EmployeeServiceFilter(*conn_details.values(),query)
+    return EmployeeServiceFilter(query)
 
 
 @app.get("/employees/filter", response_model=List[Dict])
