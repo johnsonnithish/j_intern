@@ -23,3 +23,4 @@ class DBService:
         except Error as e:
             print(f"Error: {e}")
             return None
+        
