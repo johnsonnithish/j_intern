@@ -51,7 +51,7 @@ conn_details = {
     'password': 'nQ*{i~1XeY1N0('
 }
 def get_info():
-    return EmployeeService(list(conn_details.values()))
+    return EmployeeService(*conn_details.values())
 @app.get("/employees")
 def emp_info(info: EmployeeService=Depends(get_info)):
     return info.get_employees()
