@@ -22,7 +22,7 @@ def read_root():
     return {"JWT Authentication"}
 @app.post("/token")
 async def login(form_data: OAuth2PasswordRequestForm = Depends()):
-    if form_data.username != fake_user["username"] or form_data.password != fake_user["password"]:
+    if form_data.username != test_user["username"] or form_data.password != test_user["password"]:
         raise HTTPException(status_code=400, detail="Invalid credentials")
     token = create_access_token({"sub": form_data.username}, timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
     return {"access_token": token, "token_type": "bearer"}
