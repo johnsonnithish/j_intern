@@ -42,8 +42,16 @@ class EmployeeService(DBService):
                 cursor.close()
                 connection.close()
                 print("MySQL connection is closed")
+
+conn_details = {
+    'host': '35.154.151.12',
+    'database': 'portal_db_18_10_24',
+    'user': 'johnsonm',
+    'port': 5501,
+    'password': 'nQ*{i~1XeY1N0('
+}
 def get_info():
-    return EmployeeService('35.154.151.12','portal_db_18_10_24','johnsonm',5501,'nQ*{i~1XeY1N0(')
+    return EmployeeService(list(conn_details.values()))
 @app.get("/employees")
 def emp_info(info: EmployeeService=Depends(get_info)):
     return info.get_employees()
