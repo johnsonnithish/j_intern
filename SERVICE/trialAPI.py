@@ -10,13 +10,11 @@ app = FastAPI()
 def read_root():
     return "trial" 
 
-def get_info_filter():
-    return trial_ES()
 
 @app.get("/employees")
-def emp_info(info: trial_ES=Depends(get_info_filter)):
+def emp_info(info: trial_ES=Depends(lambda: trial_ES())):
     return info.get_employees()
 
 @app.get("/employees/filter")
-def emp_info_filter(first_name: str, info: trial_ES=Depends(get_info_filter)):
+def emp_info_filter(first_name: str, info: trial_ES=Depends(lambda: trial_ES())):
     return info.get_employees_by_first_name(first_name)

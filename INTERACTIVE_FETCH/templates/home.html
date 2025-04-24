@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Lookup</title>
+    <style>
+        body {
+            text-align: center; /* Center text and inline elements */
+            font-family: Arial, sans-serif;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            width: 200px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 8px 16px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: white;
+            background-color: #007BFF;
+            padding: 8px 16px;
+            border-radius: 4px;
+        }
+
+        a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Employee Lookup</h1>
+
+    <form action="/employees/filter" method="get">
+        <input type="text" name="first_name" placeholder="Enter first name">
+        <button type="submit">Search</button>
+    </form>
+
+    <a href="/employees">View All Employees</a>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Family Lookup</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Helvetica Neue', sans-serif;
+            background: linear-gradient(to right, #fdfcfc, #eaeef2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #262626;
+            font-weight: 500;
+            margin-bottom: 30px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            background-color: white;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            padding: 12px 16px;
+            width: 250px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #3897f0;
+        }
+
+        button {
+            background-color: #3897f0;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #2f80ed;
+        }
+
+        .view-all {
+            margin-top: 10px;
+            text-decoration: none;
+            color: #3897f0;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .view-all:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Family Lookup</h1>
+
+    <form action="/family/f_name" method="get">
+        <input type="text" name="first_name" placeholder="Search by first name">
+        <button type="submit">Search First Name</button>
+    </form>
+
+    <form action="/family/l_name" method="get">
+        <input type="text" name="last_name" placeholder="Search by last name">
+        <button type="submit">Search Last Name</button>
+    </form>
+
+    <a class="view-all" href="/family">View All Family Members</a>
+</body>
+</html>
