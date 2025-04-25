@@ -1,11 +1,9 @@
 {
-  "name": "Python API Dev",
+  "name": "Python API with MySQL",
   "image": "mcr.microsoft.com/devcontainers/python:3.11",
-  "forwardPorts": [8000],
-  "postCreateCommand": "pip install -r requirements.txt",
   "features": {
-    "ghcr.io/devcontainers/features/python:1": {
-      "version": "3.11"
-    }
-  }
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+  "postCreateCommand": "pip install -r requirements.txt || true",
+  "forwardPorts": [8000, 3306]
 }
