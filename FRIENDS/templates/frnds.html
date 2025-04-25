@@ -5,37 +5,55 @@
     <title>F.R.I.E.N.D.S</title>
     <style>
         body {
-            background-image: url('/static/Blank 1 Panel Landscape Comic Strip.png');
+            background-image: url('/static/white.png');
             background-size: cover;
             font-family: Arial, sans-serif;
             color: #fff;
-            text-align: center;
-            padding-top: 40px;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
+    
         .logo {
             width: 300px;
-        }
-        .search-box {
-            background: rgba(0, 0, 0, 0.6);
-            padding: 20px;
-            display: inline-block;
-            border-radius: 10px;
             margin-top: 30px;
         }
+    
+        .search-box {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 20px 40px;
+            border-radius: 15px;
+            margin-top: auto;
+            margin-bottom: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    
+        .search-box h2 {
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+    
         .search-box button {
             margin: 10px;
             padding: 10px 20px;
             font-size: 16px;
         }
+    
         .input-section {
             display: none;
             margin-top: 15px;
         }
+    
         .result {
             display: flex;
             justify-content: center;
             margin-top: 40px;
         }
+    
         .card {
             background-color: rgba(255, 255, 255, 0.95);
             color: black;
@@ -45,12 +63,14 @@
             padding: 20px;
             gap: 20px;
         }
+    
         .card img {
             width: 150px;
             height: 150px;
             border-radius: 50%;
         }
     </style>
+    
 </head>
 <body>
     <img src="/static/Friends_logo.png" alt="F.R.I.E.N.D.S" class="logo">
@@ -98,10 +118,12 @@
             const fullName = friend["FIRST NAME"] + " " + friend["LAST NAME"];
             const alias = friend["NICK NAME"];
             const about = friend["ABOUT"];
+            const image = friend["image"] || "default_profile.jpg"; // fallback image
+
 
             resultDiv.innerHTML = `
                 <div class="card">
-                    <img src="/static/default_profile.jpg" alt="Friend Photo">
+                    <img src="/static/${image}" alt="Friend Photo">
                     <div>
                         <h2>About</h2>
                         <p><strong>Name:</strong> ${fullName}</p>
