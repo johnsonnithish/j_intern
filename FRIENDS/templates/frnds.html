@@ -102,7 +102,14 @@
         document.getElementById("search-form").addEventListener("submit", async function(event) {
             event.preventDefault();
             const query = document.getElementById("search-input").value;
-            const endpoint = `/friends/${searchType}_name?${searchType}_name=${query}`;
+            const paramMap = {
+                    first: "first_name",
+                    last: "last_name",
+                    alias: "alias"
+                };
+            const param = paramMap[searchType];
+            const endpoint = `/friends/${param}?${param}=${query}`;
+
             const res = await fetch(endpoint);
             const data = await res.json();
 

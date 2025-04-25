@@ -3,7 +3,7 @@ from mysql.connector import Error
 
 class DBService:
     def __init__(self):
-        self.host = "127.0.0.1"
+        self.host = "mysql-db"
         self.port = 3306
         self.user = "john"
         self.password = "johnspassword"

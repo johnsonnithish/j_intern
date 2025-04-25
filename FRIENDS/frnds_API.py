@@ -22,13 +22,13 @@ def friends_info(info: DBService = Depends(lambda: DBService())):
     return info.get_all()
 
 @app.get("/friends/first_name")
-def friends_info_filter(first_name: str, info: DBService = Depends(lambda: DBService())):
+def get_friends_by_first_name(first_name: str, info: DBService = Depends(lambda: DBService())):
     return info.get_f_name(first_name)
 
 @app.get("/friends/last_name")
-def friends_info_filter(last_name: str, info: DBService = Depends(lambda: DBService())):
+def get_friends_by_last_name(last_name: str, info: DBService = Depends(lambda: DBService())):
     return info.get_l_name(last_name)
 
 @app.get("/friends/alias")
-def friends_info_filter(alias: str, info: DBService = Depends(lambda: DBService())):
+def get_friends_by_alias(alias: str, info: DBService = Depends(lambda: DBService())):
     return info.get_alias(alias)
