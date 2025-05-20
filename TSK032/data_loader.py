@@ -1,5 +1,5 @@
 import pandas as pd
-
+from analysis import full_analysis
 def sample_data():
     records = pd.read_csv(
         "expense_data_1.csv",
@@ -10,6 +10,8 @@ def sample_data():
             "Category": "category"
         }
     )
+    analysis = full_analysis(records)
+    analysis.run_all()
     return records
 
 def load_data(uploaded_file):
@@ -22,4 +24,6 @@ def load_data(uploaded_file):
             "Category": "category"
         }
     )
+    analysis = full_analysis(records)
+    analysis.run_all()
     return records

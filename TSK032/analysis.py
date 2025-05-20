@@ -1,46 +1,47 @@
-def prepare_aggregates(records):
-    by_spend = records.groupby("Income/Expense", observed=True)
-    monthly_income = (
-        records[records["Income/Expense"] == "Income"]
-        .groupby(records["Date"].dt.to_period("M"))["Amount"]
-        .sum()
-        .rename("Monthly_Income")
-    )
-    return by_spend, monthly_income
+import streamlit as st
+import matplotlib.pyplot as plt
+import io
 
-def get_top3_per_month(records, monthly_income):
-    monthly_by_cat = records.groupby(
-        [records["Date"].dt.to_period("M"), "Category"], observed=True
-    )["Amount"].sum().reset_index()
+class full_analysis:
+    def __init__(self, records):
+        self.records = records
 
-    top3 = (
-        monthly_by_cat
-        .sort_values(['Date', 'Amount'], ascending=[True, False])
-        .groupby('Date')
-        .head(3)
-        .merge(monthly_income, left_on="Date", right_index=True, how="left")
-    )
+    def incvexp_plot(self):
+        by_spend = self.records.groupby("Income/Expense", observed=True)
+        spend_summary = by_spend["Amount"].sum()
+        fig, ax = plt.subplots(figsize=(4, 4))
+        spend_summary.plot(kind="pie", autopct="%1.1f%%", startangle=90, ax=ax)
+        ax.set_ylabel("")
+        ax.set_title("Income vs Expense Distribution")
+        buf = io.BytesIO()
+        fig.savefig(buf, format="png", bbox_inches="tight")
+        st.image(buf, width=300)
 
-    top3["Percent"] = (top3["Amount"] / top3["Monthly_Income"] * 100).round(2)
-    top3["Date"] = top3["Date"].dt.to_timestamp().dt.strftime("%B %Y")
-    return top3[["Date", "Category", "Amount", "Percent"]]
+    def top_categories_table(self):
+        top_cats = (
+            self.records[self.records["Income/Expense"] == "Expense"]
+            .groupby("Category")["Amount"]
+            .sum()
+            .sort_values(ascending=False)
+            .head(5)
+            .reset_index()
+        )
+        st.subheader("Top 5 Expense Categories")
+        st.dataframe(top_cats)
 
-def get_needs_data(records, needs):
-    df = (
-        records[records["Category"].isin(needs)]
-        .groupby([records["Date"].dt.to_period("M"), "Category"], observed=True)["Amount"]
-        .sum()
-        .reset_index()
-    )
-    df["Date"] = df["Date"].dt.to_timestamp().dt.strftime("%B %Y")
-    return df, df["Amount"].sum()
+    def monthly_totals_chart(self):
+        monthly = (
+            self.records
+            .groupby(self.records["Date"].dt.to_period("M"))["Amount"]
+            .sum()
+            .reset_index()
+        )
+        monthly["Date"] = monthly["Date"].dt.to_timestamp()
+        st.subheader("Monthly Total Spending")
+        st.line_chart(monthly.set_index("Date"))
 
-def get_others_data(records, needs):
-    df = (
-        records[~records["Category"].isin(needs)]
-        .groupby([records["Date"].dt.to_period("M"), "Category"], observed=True)["Amount"]
-        .sum()
-        .reset_index()
-    )
-    df["Date"] = df["Date"].dt.to_timestamp().dt.strftime("%B %Y")
-    return df, df["Amount"].sum()
+    def run_all(self):
+        st.header("📊 Analysis Summary")
+        self.incvexp_plot()
+        self.top_categories_table()
+        self.monthly_totals_chart()

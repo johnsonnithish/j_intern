@@ -1,5 +1,7 @@
 import streamlit as st
 from data_loader import load_data, sample_data
+from analysis import full_analysis
+
 st.set_page_config(page_title="Financial Recommender", page_icon=":moneybag:", layout="wide")
 
 st.title("Financial Recommender")
@@ -37,3 +39,4 @@ if mode == "manual":
 
 if mode == "sample":
      st.write("Using sample data")
+     sample_data()
