@@ -1,58 +1,39 @@
-# main_app.py
 import streamlit as st
-import matplotlib.pyplot as plt
+from data_loader import load_data, sample_data
+st.set_page_config(page_title="Financial Recommender", page_icon=":moneybag:", layout="wide")
 
-from data_loader import load_data
-from analysis import (
-    prepare_aggregates,
-    get_top3_per_month,
-    get_needs_data,
-    get_others_data
-)
+st.title("Financial Recommender")
+st.divider()
+st.write("CHOOSE FORM OF INPUT")
 
-records = load_data()
-by_spend, monthly_income = prepare_aggregates(records)
+uploaded_file = None  
 
+col_spacer1, col1, col2, col3, col_spacer2 = st.columns([5, 2, 3, 5, 2])
 
-st.title("Monthly Spending Overview")
-st.dataframe(records, hide_index=True)
+with col1:
+    if st.button("Upload CSV", key="upload_csv"):
+        st.session_state.input_type = "upload"
 
+with col2:
+    if st.button("Enter Data Manually", key="enter_data"):
+        st.session_state.input_type = "manual"
 
-spend_summary = by_spend["Amount"].sum()
-fig, ax = plt.subplots()
-spend_summary.plot(kind="pie", autopct="%1.1f%%", startangle=90, ax=ax)
-ax.set_ylabel("")
-ax.set_title("Income vs Expense Distribution")
-st.pyplot(fig)
+with col3:
+    if st.button("Use Sample Data", key="use_sample_data"):
+        st.session_state.input_type = "sample"
 
 
-top3 = get_top3_per_month(records, monthly_income)
-st.subheader("Top 3 Spending Categories per Month")
-st.dataframe(top3, hide_index=True)
+mode = st.session_state.get("input_type", "")
+if mode == "upload":
+        uploaded_file = st.file_uploader("Upload your CSV", type=["csv"])
+        st.caption("Make sure your CSV has the following columns: Date, Category, Income/Expense, Amount")
+        if uploaded_file:
+            records = load_data(uploaded_file)
+            st.session_state.show_uploader = False
+            st.success("File uploaded successfully!")
 
+if mode == "manual":
+     st.write("Enter your data manually")
 
-needs = ["Food", "Transportation", "Household", "Education"]
-
-st.subheader("Monthly NEED Spending")
-needs_df, needs_amt = get_needs_data(records, needs)
-st.dataframe(needs_df, hide_index=True)
-
-st.subheader("Monthly OTHER Spending")
-others_df, other_amt = get_others_data(records, needs)
-st.dataframe(others_df, hide_index=True)
-
-
-savings = 0
-if "Savings" not in records["Category"].unique():
-    st.caption("No savings category found in the records.")
-
-
-st.subheader("Category wise Spending")
-labels = ['Needs', 'Others', 'Savings']
-sizes = [needs_amt, other_amt, savings]
-
-fig2, ax2 = plt.subplots()
-ax2.pie(sizes, labels=labels, autopct="%1.1f%%", startangle=90)
-ax2.set_title("Needs vs Other Spending Distribution")
-ax2.axis("equal")
-st.pyplot(fig2)
+if mode == "sample":
+     st.write("Using sample data")
