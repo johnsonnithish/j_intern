@@ -41,7 +41,7 @@ class full_analysis:
         st.line_chart(monthly.set_index("Date"))
 
     def run_all(self):
-        st.header("📊 Analysis Summary")
+        st.header("Analysis Summary")
         self.incvexp_plot()
         self.top_categories_table()
         self.monthly_totals_chart()
