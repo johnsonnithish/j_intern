@@ -40,8 +40,56 @@ class full_analysis:
         st.subheader("Monthly Total Spending")
         st.line_chart(monthly.set_index("Date"))
 
+    def needs(self):
+        self.needs_l = ['food', 'transport', 'entertainment', 'utilities', 'rent', 'groceries', 'education']
+        needs_df = (
+            self.records[self.records["Category"].str.lower().isin(self.needs_l)]
+            .groupby([self.records["Date"].dt.to_period("M"), "Category"], observed=True)["Amount"]
+            .sum()
+            .reset_index()
+        )
+        needs_df["Date"] = needs_df["Date"].dt.to_timestamp().dt.strftime("%B %Y")
+        return needs_df["Amount"].sum()
+
+
+    def wants(self):
+        wants_df = (
+            self.records[
+                ~self.records["Category"].str.lower().isin(self.needs_l + ["savings"])
+            ]
+            .groupby([self.records["Date"].dt.to_period("M"), "Category"], observed=True)["Amount"]
+            .sum()
+            .reset_index()
+        )
+        wants_df["Date"] = wants_df["Date"].dt.to_timestamp().dt.strftime("%B %Y")
+        return wants_df["Amount"].sum()
+    
+    def savings(self):
+        savings_df = (
+            self.records[self.records["Category"].str.lower() == "savings"]
+            .groupby([self.records["Date"].dt.to_period("M"), "Category"], observed=True)["Amount"]
+            .sum()
+            .reset_index()
+        )
+        savings_df["Date"] = savings_df["Date"].dt.to_timestamp().dt.strftime("%B %Y")
+        return savings_df["Amount"].sum()
+    
+    def category_split_pie(self):
+        needs_amt = self.needs()
+        wants_amt = self.wants()
+        savings_amt = self.savings()
+        labels = ['Needs', 'Wants', 'Savings']
+        sizes = [needs_amt, wants_amt, savings_amt]
+        fig, ax = plt.subplots(figsize=(4, 4))
+        ax.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90)
+        ax.set_title("Spending Distribution")
+        ax.axis('equal') 
+        st.subheader("Needs vs Wants vs Savings")
+        st.pyplot(fig)
+
     def run_all(self):
         st.header("Analysis Summary")
         self.incvexp_plot()
         self.top_categories_table()
         self.monthly_totals_chart()
+        self.category_split_pie()

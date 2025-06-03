@@ -11,7 +11,7 @@ st.divider()
 st.write("CHOOSE FORM OF INPUT")
 
 uploaded_file = None  
-
+    
 
 col_spacer1, col1, col2, col3, col_spacer2 = st.columns([5, 2, 3, 5, 2])
 
@@ -81,7 +81,7 @@ if mode == "manual":
         file_path = "custom_data.csv"
         edited.to_csv(file_path, index=False)
         st.success("Dataset saved!")
-        st.header("🔍 Running Analysis on Custom Data")
+        st.header("Running Analysis on Custom Data")
         user_data = pd.read_csv(file_path, parse_dates=["Date"])
         analysis = full_analysis(user_data)
         analysis.run_all()
